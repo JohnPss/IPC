@@ -42,6 +42,7 @@ void tcldRplc(char *s)
 }
 
 int main()
+
 {
 
     char s[128] = "";
