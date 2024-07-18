@@ -73,7 +73,7 @@ void eclalnRplc(char *str)
     printf("%s", str2);
 }
 
-void mtzMtpl()
+void mtzMtpl(int cl[], int ln[])
 {
 }
 
