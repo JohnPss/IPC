@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 void ctdFrq(char *s)
 {
@@ -11,7 +12,7 @@ void ctdFrq(char *s)
     for (int i = 0; i < 128; i++)
     {
         if (tblascii[i] > 0)
-            printf("%d, %d\n", i, tblascii[i]);
+            printf("%c, %d\n", i, tblascii[i]);
     }
 }
 
@@ -73,20 +74,28 @@ void eclalnRplc(char *str)
     printf("%s", str2);
 }
 
-void mtzMtpl(int cl[], int ln[])
+void clcMtrz(int **A, int **B, int **C, int clA, int lnA, int clB, int lnB)
 {
-    char mtz[strlen(cl)][strlen(ln)];
-    int sum = 0;
-
-    for (int i = 0; i <= strlen(cl); i++)
+    for (int i = 0; i < clA; i++)
     {
-        for (int j = 0; j <= strlen(cl); j++)
+        for (int j = 0; j < lnB; j++)
         {
-            for (int z = 0; z <= strlen(mtz[i]); z++)
+            C[i][j] = 0;
+            for (int z = 0; z < clA; z++)
             {
-                mtz[i][j] = cl[i] * ln[j];
+                C[i][j] += A[i][z] * B[z][j];
             }
         }
+    }
+
+    printf("Reultado:\n");
+    for (int i = 0; i < clA; i++)
+    {
+        for (int j = 0; j < lnB; j++)
+        {
+            printf("%d ", C[i][j]);
+        }
+        printf("\n");
     }
 }
 
@@ -94,31 +103,95 @@ int main()
 {
 
     int choice;
-    printf("Escolha uma opção:\n");
-    printf("1. ctdFrq\n");
-    printf("2. tcldRplc\n");
-    printf("3. eclalnRplc\n");
-    scanf("%d", &choice);
 
-    char input[128];
-    printf("Digite uma sequencia de caracteres: ");
-    fgets(input, sizeof(input), stdin);
-
-    switch (choice)
+    while (1)
     {
-    case 1:
-        ctdFrq(input);
-        break;
-    case 2:
-        tcldRplc(input);
-        break;
-    case 3:
-        eclalnRplc(input);
-        break;
-    default:
-        printf("Opção inválida.\n");
-        break;
-    }
 
-    // ctdFrq(s);
+        printf("Escolha uma opção:\n");
+        printf("1) Checar a frquencia de cada caracter.\n");
+        printf("2) Achar e substituir a palavra teclado.\n");
+        printf("3) Achar e substituir as palavras teclado e estudante.\n");
+        printf("4) Multiplicar duas matrizes.\n");
+        printf("5) Sair.\n");
+        scanf("%d", &choice);
+        getchar();
+
+        switch (choice)
+        {
+        case 1:
+            char strex1[128];
+            printf("Digite uma string: ");
+            fgets(strex1, 128, stdin);
+            ctdFrq(strex1);
+            break;
+        case 2:
+            char strex2[128];
+            printf("Digite uma string: ");
+            fgets(strex2, 128, stdin);
+            tcldRplc(strex2);
+            break;
+        case 3:
+            char strex3[128];
+            printf("Digite uma string: ");
+            fgets(strex3, 128, stdin);
+            eclalnRplc(strex3);
+            break;
+
+        case 4:
+            int **A, **B, **C;
+            int clA, lnA, clB, lnB;
+
+            printf("Digite o numero de colunas e linhas da matriz A: ");
+            scanf("%d %d", &clA, &lnA);
+            printf("Digite o numero de colunas e linhas da matriz B: ");
+            scanf("%d %d", &clB, &lnB);
+
+            if (clA != lnB)
+            {
+                printf("Impossivel multiplicar as matrizes\n");
+                return 1;
+            }
+
+            A = (int **)malloc(clA * sizeof(int *));
+            B = (int **)malloc(clB * sizeof(int *));
+            C = (int **)malloc(clA * sizeof(int *));
+
+            for (int i = 0; i < clA; i++)
+            {
+                A[i] = (int *)malloc(lnA * sizeof(int));
+            }
+            for (int i = 0; i < clB; i++)
+            {
+                B[i] = (int *)malloc(lnB * sizeof(int));
+                C[i] = (int *)malloc(lnB * sizeof(int));
+            }
+
+            printf("Digite os elementos da matriz A:\n");
+            for (int i = 0; i < clA; i++)
+            {
+                for (int j = 0; j < lnA; j++)
+                {
+                    scanf("%d", &A[i][j]);
+                }
+            }
+
+            printf("Digite os elementos da matriz B:\n");
+            for (int i = 0; i < clB; i++)
+            {
+                for (int j = 0; j < lnB; j++)
+                {
+                    scanf("%d", &B[i][j]);
+                }
+            }
+
+            clcMtrz(A, B, C, clA, lnA, clB, lnB);
+            break;
+        case 5:
+            return 0;
+            break;
+        default:
+            printf("Opção inválida.\n");
+            break;
+        }
+    }
 }
