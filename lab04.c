@@ -75,6 +75,19 @@ void eclalnRplc(char *str)
 
 void mtzMtpl(int cl[], int ln[])
 {
+    char mtz[strlen(cl)][strlen(ln)];
+    int sum = 0;
+
+    for (int i = 0; i <= strlen(cl); i++)
+    {
+        for (int j = 0; j <= strlen(cl); j++)
+        {
+            for (int i = 0; i <= strlen(mtz[i]); i++)
+            {
+                mtz[i][j] = cl[i] * ln[j];
+            }
+        }
+    }
 }
 
 int main()
