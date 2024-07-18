@@ -82,7 +82,7 @@ void mtzMtpl(int cl[], int ln[])
     {
         for (int j = 0; j <= strlen(cl); j++)
         {
-            for (int i = 0; i <= strlen(mtz[i]); i++)
+            for (int z = 0; z <= strlen(mtz[i]); z++)
             {
                 mtz[i][j] = cl[i] * ln[j];
             }
