@@ -16,62 +16,50 @@ void ctdFrq(char *s)
     }
 }
 
-void tcldRplc(char *s)
+void tcldrplc(char *strtcld, char *strmdf)
 {
-    char str1[128] = "";
-    char *plvrTpm = strtok(s, " ");
-
-    while (plvrTpm != NULL)
+    int i = 0, j = 0;
+    int tmn = strlen(strtcld);
+    while (i < tmn)
     {
-        if (strcmp(plvrTpm, "teclado") != 0)
+        if (strncmp(&strtcld[i], "teclado", 7) == 0)
         {
-            strcat(str1, plvrTpm);
-            strcat(str1, " ");
+            strcpy(&strmdf[j], "teclado ou mouse");
+            i += 7;
+            j += 16;
         }
         else
         {
-            strcat(str1, "teclado e mouse");
-            strcat(str1, " ");
+            strmdf[j++] = strtcld[i++];
         }
-        plvrTpm = strtok(NULL, " ");
     }
-
-    if (str1[0] != '\0')
-        str1[strlen(str1) - 1] = '\0';
-
-    printf("%s", str1);
+    strmdf[j] = '\0'; // Termina
 }
 
-void eclalnRplc(char *str)
+void alnEsclRplc(char *srcEx03, char *strMdfEx03)
 {
-    char str2[128] = "";
-    char *plvrstr = strtok(str, " ");
-
-    while (plvrstr != NULL)
+    int x = 0, z = 0;
+    int length = strlen(srcEx03);
+    while (x < length)
     {
-        if (strcmp(plvrstr, "aluno") != 0 && strcmp(plvrstr, "escola") != 0)
+        if (strncmp(&srcEx03[x], "aluno", 5) == 0)
         {
-            strcat(str2, plvrstr);
-            strcat(str2, " ");
+            strcpy(&strMdfEx03[z], "estudante");
+            x += 5;
+            z += 9;
         }
-        else if (strcmp(plvrstr, "aluno") == 0)
+        else if (strncmp(&srcEx03[x], "escola", 6) == 0)
         {
-            strcat(str2, "estudante");
-            strcat(str2, " ");
+            strcpy(&strMdfEx03[z], "universidade");
+            x += 6;
+            z += 12;
         }
-        else if (strcmp(plvrstr, "escola") == 0)
+        else
         {
-            strcat(str2, "universidade");
-            strcat(str2, " ");
+            strMdfEx03[z++] = srcEx03[x++];
         }
-
-        plvrstr = strtok(NULL, " ");
     }
-
-    if (str2[0] != '\0')
-        str2[strlen(str2) - 1] = '\0';
-
-    printf("%s", str2);
+    strMdfEx03[z] = '\0';
 }
 
 void clcMtrz(int **A, int **B, int **C, int clA, int lnA, int clB, int lnB)
@@ -107,7 +95,7 @@ int main()
     while (1)
     {
 
-        printf("Escolha uma opção:\n");
+        printf("\nEscolha uma opção:\n");
         printf("1) Checar a frquencia de cada caracter.\n");
         printf("2) Achar e substituir a palavra teclado.\n");
         printf("3) Achar e substituir as palavras teclado e estudante.\n");
@@ -125,16 +113,27 @@ int main()
             ctdFrq(strex1);
             break;
         case 2:
-            char strex2[128];
-            printf("Digite uma string: ");
-            fgets(strex2, 128, stdin);
-            tcldRplc(strex2);
+            char strtcld[1000];
+            char strmdf[2000];
+
+            printf("digite uma frase: ");
+            fgets(strtcld, 1000, stdin);
+            strtcld[strcspn(strtcld, "\n")] = 0;
+
+            tcldrplc(strtcld, strmdf);
+
+            printf("%s\n", strmdf);
             break;
         case 3:
-            char strex3[128];
-            printf("Digite uma string: ");
-            fgets(strex3, 128, stdin);
-            eclalnRplc(strex3);
+            char strEx3[1000];
+            char strMdfEx3[2000];
+
+            printf("Digite uma frase: ");
+            fgets(strEx3, 1000, stdin);
+            strEx3[strcspn(strEx3, "\n")] = 0;
+            alnEsclRplc(strEx3, strMdfEx3);
+
+            printf("%s\n", strMdfEx3);
             break;
 
         case 4:
