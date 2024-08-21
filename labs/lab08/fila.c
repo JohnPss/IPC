@@ -1,126 +1,149 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "fila.h"
 
-// Cria uma fila vazia e retorna seu endereço
 Fila *criar_fila()
 {
-    Fila *f = (Fila *)malloc(sizeof(Fila)); // Aloca memória para a fila
+    Fila *f = (Fila *)malloc(sizeof(Fila));
 
     if (f == NULL)
-    { // Verifica se a alocação foi bem sucedida
+    {
         printf("Erro na alocação de memória.\n");
         exit(1);
     }
 
-    f->inicio = NULL; // Inicializa o início da fila como NULL
-    f->fim = NULL;    // Inicializa o fim da fila como NULL
+    f->inicio = NULL;
+    f->fim = NULL;
 
-    return f; // Retorna o endereço da fila criada
+    return f;
 }
 
-// Insere um dado no fim da fila
-void enfileirar(Fila *f, TipoDado dado)
+No *criarNode(char *nome, int cpf, int prioridade)
 {
-    if (f != NULL)
-    {                                        // Verifica se a fila existe
-        No *novo = (No *)malloc(sizeof(No)); // Aloca memória para o novo nó
+    No *novoNode = (No *)malloc(sizeof(No));
+    strcpy(novoNode->dado.nome, nome);
+    novoNode->dado.cpf = cpf;
+    novoNode->prioridade = prioridade;
+    novoNode->prox = NULL;
+    return novoNode;
+}
 
-        if (novo == NULL)
-        { // Verifica se a alocação foi bem sucedida
-            printf("Erro na alocação de memória.\n");
-            exit(1);
-        }
+void enfileira(Fila *fila, char nome[50], int cpf, int prioridade)
+{
+    No *novoNode = criarNode(nome, cpf, prioridade);
 
-        novo->dado = dado; // Atribui o dado ao novo nó
-        novo->prox = NULL; // Atribui NULL ao ponteiro para o próximo nó do novo nó
+    if (fila_vazia(fila))
+    {
+        fila->inicio = novoNode;
+        fila->fim = novoNode;
+    }
+    else if (prioridade == 1)
+    {
 
-        if (fila_vazia(f))
-        { // Se a fila estiver vazia, o novo nó será o início e o fim da fila
-            f->inicio = novo;
-            f->fim = novo;
+        if (fila->inicio->prioridade == 0)
+        {
+
+            novoNode->prox = fila->inicio;
+            fila->inicio = novoNode;
         }
         else
-        { // Se a fila não estiver vazia, o novo nó será o próximo do fim da fila e o novo fim da fila
-            f->fim->prox = novo;
-            f->fim = novo;
+        {
+
+            No *temp = fila->inicio;
+            while (temp->prox != NULL && temp->prox->prioridade == 1)
+            {
+                temp = temp->prox;
+            }
+            novoNode->prox = temp->prox;
+            temp->prox = novoNode;
+
+            if (novoNode->prox == NULL)
+            {
+                fila->fim = novoNode;
+            }
         }
+    }
+    else
+    {
+
+        fila->fim->prox = novoNode;
+        fila->fim = novoNode;
     }
 }
 
-// Remove um dado do início da fila e retorna seu valor
-TipoDado desenfileirar(Fila *f)
+Pessoa desenfileirar(Fila *f)
 {
     if (f != NULL && !fila_vazia(f))
-    {                                // Verifica se a fila existe e não está vazia
-        No *aux = f->inicio;         // Guarda o endereço do início da fila em aux
-        TipoDado dado = aux->dado;   // Guarda o dado do início da fila em dado
-        f->inicio = f->inicio->prox; // Atualiza o início da fila para o próximo nó
-        free(aux);                   // Libera a memória do nó apontado por aux
+    {
+        No *aux = f->inicio;
+        Pessoa dado = aux->dado;
+        f->inicio = f->inicio->prox;
+        free(aux);
 
         if (fila_vazia(f))
-        { // Se a fila ficou vazia, o fim da fila também deve ser NULL
+        {
             f->fim = NULL;
         }
 
-        return dado; // Retorna o dado removido
+        return dado;
     }
     else
-    { // Se a fila não existe ou está vazia, retorna um valor inválido
+    {
         printf("Fila inexistente ou vazia.\n");
-        return -1;
     }
 }
 
-// Imprime os dados da fila na ordem do início ao fim
 void mostrar_fila(Fila *f)
 {
     if (f != NULL && !fila_vazia(f))
-    {                        // Verifica se a fila existe e não está vazia
-        No *aux = f->inicio; // Cria um ponteiro auxiliar para percorrer a fila
-
-        printf("Fila: ");
+    {
+        No *aux = f->inicio;
+        int i = 1;
+        printf("Fila: \n");
         while (aux != NULL)
-        {                             // Enquanto o auxiliar não for NULL
-            printf("%d ", aux->dado); // Imprime o dado do nó apontado por aux
-            aux = aux->prox;          // Atualiza o auxiliar para o próximo nó
+        {
+            printf("Pessoa %d:\n", i);
+            printf("Nome: %s", aux->dado.nome);
+            printf("CPF: %d \n", aux->dado.cpf);
+            printf("\n");
+            aux = aux->prox;
+            i++;
         }
 
         printf("\n");
     }
     else
-    { // Se a fila não existe ou está vazia, imprime uma mensagem de erro
+    {
         printf("Fila inexistente ou vazia.\n");
     }
 }
 
-// Verifica se a fila está vazia e retorna 1 se sim, 0 se não
 int fila_vazia(Fila *f)
 {
     if (f != NULL)
-    {                             // Verifica se a fila existe
-        return f->inicio == NULL; // Retorna 1 se o início da fila for NULL, 0 caso contrário
+    {
+        return f->inicio == NULL;
     }
     else
-    { // Se a fila não existe, retorna -1
+    {
         return -1;
     }
 }
 
-// Libera a memória de uma fila e seus nós
 void liberar_fila(Fila *f)
 {
     if (f != NULL)
-    {            // Verifica se a fila existe
-        No *aux; // Cria um ponteiro auxiliar para percorrer a fila
+    {
+        No *aux;
 
         while (f->inicio != NULL)
-        {                                // Enquanto o início da fila não for NULL
-            aux = f->inicio;             // Guarda o endereço do início da fila em aux
-            f->inicio = f->inicio->prox; // Atualiza o início da fila para o próximo nó
-            free(aux);                   // Libera a memória do nó apontado por aux
+        {
+            aux = f->inicio;
+            f->inicio = f->inicio->prox;
+            free(aux);
         }
 
-        free(f); // Libera a memória da fila
+        free(f);
     }
 }
