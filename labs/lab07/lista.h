@@ -13,11 +13,6 @@ struct ListaSimplesEnc
     struct Nodo *prim;
 };
 
-typedef struct p
-{
-    struct Nodo *prox;
-} pessoa;
-
 void criarLista(struct ListaSimplesEnc *pList);
 void mostrarLista(struct ListaSimplesEnc *pList);
 void mostraespecifico(struct ListaSimplesEnc *pList, int cpf);
