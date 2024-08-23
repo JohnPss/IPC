@@ -28,6 +28,7 @@ int main()
             printf("Digite a prioridade desta pessoa: ");
             scanf("%d", &prioridade);
             enfileira(f, dado.nome, dado.cpf, prioridade);
+            printf("Numero de pessoas na frente: %d\n", contarFila(f, prioridade));
             break;
         case 2:
             dado = desenfileirar(f);

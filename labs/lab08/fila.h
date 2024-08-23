@@ -28,5 +28,6 @@ void liberar_fila(Fila *f);
 int fila_vazia(Fila *f);
 No *criarNode(char nome[50], int cpf, int prioridade);
 Pessoa desenfileirar(Fila *f);
+int contarFila(Fila *f, int prioridade);
 
 #endif

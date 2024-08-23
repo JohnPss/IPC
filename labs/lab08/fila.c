@@ -72,6 +72,28 @@ void enfileira(Fila *fila, char nome[50], int cpf, int prioridade)
     }
 }
 
+int contarFila(Fila *f, int prioridade)
+{
+    int count = 0;
+    No *aux = f->inicio;
+
+    while (aux != NULL)
+    {
+        if (prioridade == 1 && aux->prioridade == 1)
+        {
+            count++;
+        }
+        else if (prioridade == 0)
+        {
+            count++;
+        }
+
+        aux = aux->prox;
+    }
+
+    return count;
+}
+
 Pessoa desenfileirar(Fila *f)
 {
     if (f != NULL && !fila_vazia(f))
