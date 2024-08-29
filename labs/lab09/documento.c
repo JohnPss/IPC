@@ -11,43 +11,39 @@ void criarPilha(Pilha *pilha)
 
 void empilhar(Pilha *pilha, Documento *doc)
 {
-    Nodo *novo = (struct Nodo *)malloc(sizeof(Nodo));
+    NodoP *novo = (NodoP *)malloc(sizeof(NodoP));
     if (novo == NULL)
     {
         printf("Memória insuficiente.\n");
         return;
     }
 
-    novo->doc = doc;
-    novo = pilha->topo;
+    novo->doc = *doc;
+    novo->prox = pilha->topo;
     pilha->topo = novo;
 }
 
-int desempilhar(struct Pilha *pilha)
+void desempilhar(Pilha *pilha)
 {
     if (estaVazia(pilha))
     {
         printf("Pilha vazia.\n");
-        return -1; // Retornar -1 ou outro valor específico quando a pilha está vazia.
     }
-    int valor = pilha->topo->info;
-    struct Nodo *temp = pilha->topo;
+    NodoP *temp = pilha->topo;
     pilha->topo = pilha->topo->prox;
     free(temp);
-    return valor;
 }
 
-int mostrarTopo(struct Pilha *pilha)
+int mostrarTopo(Pilha *pilha)
 {
     if (estaVazia(pilha))
     {
         printf("Pilha vazia.\n");
         return -1;
     }
-    return pilha->topo->info;
 }
 
-int estaVazia(struct Pilha *pilha)
+int estaVazia(Pilha *pilha)
 {
     return (pilha->topo == NULL);
 }

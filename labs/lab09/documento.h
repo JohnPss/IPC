@@ -9,20 +9,20 @@ typedef struct documento
     LSE *autores;
 } Documento;
 
-typedef struct nodo
+typedef struct nodop
 {
     Documento doc;
-    Nodo *prox;
-} Nodo;
+    struct nodop *prox;
+} NodoP;
 
 typedef struct pilha
 {
-    Nodo *topo;
+    NodoP *topo;
 } Pilha;
 
 void criarPilha(Pilha *pilha);
 void empilhar(Pilha *pilha, Documento *doc);
-int desempilhar(Pilha *pilha);
+void desempilhar(Pilha *pilha);
 int mostrarTopo(Pilha *pilha);
 int estaVazia(Pilha *pilha);
 

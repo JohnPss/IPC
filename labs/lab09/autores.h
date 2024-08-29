@@ -7,15 +7,15 @@ typedef struct autor
     int id;
 } Autor;
 
-typedef struct nodo
+typedef struct nodoF
 {
     Autor autor;
-    Nodo *prox;
-} Nodo;
+    struct nodoF *prox;
+} NodoF;
 
 typedef struct lse
 {
-    Nodo *prim;
+    NodoF *prim;
 } LSE;
 
 void criarLSE();

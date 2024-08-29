@@ -10,12 +10,12 @@ void criarLSE(LSE *aL)
 
 void addLista(LSE *l, Autor *p)
 {
-    Nodo *novo = (Nodo *)malloc(sizeof(Nodo));
+    NodoF *novo = (NodoF *)malloc(sizeof(NodoF));
     novo->autor.id = p->id;
     strcpy(novo->autor.nome, p->nome);
     novo->prox = NULL;
 
-    Nodo *temp = (Nodo *)malloc(sizeof(Nodo));
+    NodoF *temp = (NodoF *)malloc(sizeof(NodoF));
     temp = l->prim;
 
     if (l->prim == NULL)
@@ -33,7 +33,7 @@ void addLista(LSE *l, Autor *p)
 
 void mostrarLSE(LSE *l)
 {
-    Nodo *p;
+    NodoF *p;
     for (p = l->prim; p != NULL; p = p->prox)
     {
         printf("--------------");
