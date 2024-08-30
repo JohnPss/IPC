@@ -6,7 +6,7 @@ typedef struct documento
 {
     int id;
     char titulo[50];
-    LSE *autores;
+    NodoF *autores;
 } Documento;
 
 typedef struct nodop
@@ -21,9 +21,10 @@ typedef struct pilha
 } Pilha;
 
 void criarPilha(Pilha *pilha);
-void empilhar(Pilha *pilha, Documento *doc);
-void desempilhar(Pilha *pilha);
-int mostrarTopo(Pilha *pilha);
+void empilhar(Pilha *p, int id, char *titulo, NodoF *autores);
+NodoP *desempilhar(Pilha *p);
+void mostrarTopo(Pilha *pilha);
+void mostrarPilha(Pilha *pilha);
 int estaVazia(Pilha *pilha);
 
 #endif
