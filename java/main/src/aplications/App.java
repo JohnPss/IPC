@@ -2,61 +2,61 @@ package aplications;
 
 import java.util.HashMap;
 
-import entities.funcionarios;
+import entities.funcionario;
 import java.util.Scanner;
 
 public class App {
+    public static HashMap<Integer, funcionario> funcionarios = new HashMap<>();
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        HashMap<Integer, funcionarios> funcionarios = new HashMap<>();
-
         while (true) {
+            System.out.println("Choose an option:");
+            System.out.println("1. Register employee");
+            System.out.println("2. List employees");
+            System.out.println("3. Remove employees");
+            System.out.println("4. Exit");
+            int option = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
 
-            funcionarios func = cadr.cadastrarFuncionarios();
-            if (func == null) {
-                break;
+            switch (option) {
+                case 1:
+                    funcionario func = cadr.cadastrarFuncionarios();
+                    if (func != null) {
+                        funcionarios.put(func.getCpf(), func);
+                        System.out.println("Employee registered with CPF: " + func.getCpf());
+                    } else {
+                        System.out.println("Failed to register employee.");
+                    }
+                    break;
+                case 2:
+                    for (funcionario f : funcionarios.values()) {
+                        System.out.println("\n");
+                        System.out.println(f);
+                    }
+                    break;
+                case 3:
+                    System.out.println("CPF:");
+                    int cpff = scanner.nextInt();
+                    scanner.nextLine(); // Consume newline
+                    if (funcionarios.containsKey(cpff)) {
+                        funcionarios.remove(cpff);
+                        System.out.println("Employee removed with CPF: " + cpff);
+                    } else {
+                        System.out.println("Employee not found with CPF: " + cpff);
+                    }
+                    break;
+                case 4:
+                    System.out.println("Exiting...");
+                    scanner.close();
+                    return;
+                default:
+                    System.out.println("Invalid option. Please try again.");
+                    break;
             }
-
-            funcionarios.put(func.getCpf(), func);
         }
-
-        for (funcionarios func : funcionarios.values()) {
-            System.out.println(func);
-        }
-
-        scanner.close();
 
     }
+
 }
-
-// System.out.println("1 - Cadastrar funcionário");System.out.println("2 -
-// Listar funcionários");System.out.println("3 - Sair");System.out.print("Opção:
-// ");
-
-// int opcao = scanner.nextInt();scanner.nextLine();
-
-// switch(opcao)
-// {
-// case 1:
-// cadr cadastro = new cadr();
-// funcionarios funcionario = cadastro.cadastrarFuncionarios();
-// funcionarios.put(funcionario.getCpf(), funcionario);
-// break;
-// case 2:
-// for (funcionarios func : funcionarios.values()) {
-// System.out.println(func);
-// }
-// break;
-// case 3:
-// System.out.println("Saindo...");
-// break;
-// default:
-// System.out.println("Opção inválida!");
-// break;
-// }
-
-// if(opcao==3)
-// {
-// break;
-// }

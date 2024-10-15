@@ -4,7 +4,7 @@
 #include <stdbool.h>
 
 #define MAX_NOME 100
-#define MAX_CAIXAS 2
+#define MAX_CAIXAS 5
 #define MAX_CLIENTES 30
 
 typedef struct
@@ -12,7 +12,7 @@ typedef struct
     char nome[MAX_NOME];
     long long cpf;
     int prioridade;
-    int num_itens;
+    int numItens;
 } Cliente;
 
 typedef struct
@@ -20,16 +20,16 @@ typedef struct
     int id;
     bool aberto;
     Cliente *fila[MAX_CLIENTES];
-    int tamanho_fila;
+    int tamanhoFila;
 } Caixa;
 
 extern Caixa caixas[MAX_CAIXAS];
 
-void cadastrarClienteOrdenado(int caixa_id, const char *nome, long long cpf, int prioridade, int num_itens);
-void atenderCliente(int caixa_id);
-void abrirCaixa(int caixa_id);
+void cadastrarClienteOrdenado(int caixaId, const char *nome, long long cpf, int prioridade, int numItens);
+void atenderCliente(int caixaId);
+void abrirCaixa(int caixaId);
 void abrirCaixas();
-void fecharCaixa(int caixa_id);
+void fecharCaixa(int caixaId);
 void imprimirListaClientesEspera();
 void imprimirStatusCaixas();
 

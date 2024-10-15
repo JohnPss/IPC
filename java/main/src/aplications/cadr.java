@@ -1,28 +1,27 @@
 package aplications;
 
 import java.util.Scanner;
-import entities.funcionarios;
+import entities.funcionario;
 
 public class cadr {
     private static Scanner scanner = new Scanner(System.in);
 
-    public static funcionarios cadastrarFuncionarios() {
+    public static funcionario cadastrarFuncionarios() {
         String nome;
-        funcionarios funcionario = null;
+        funcionario funcionario = null;
 
         while (true) {
 
             System.out.print("Nome: ");
             nome = scanner.nextLine();
 
-            // Se o nome for "0", encerra o loop e retorna o funcionário (null nesse caso)
             if (nome.equals("0")) {
                 return funcionario;
             }
 
             System.out.print("CPF: ");
             Integer cpf = scanner.nextInt();
-            scanner.nextLine(); // Consumir a quebra de linha após o número
+            scanner.nextLine();
 
             System.out.print("Email: ");
             String email = scanner.nextLine();
@@ -38,7 +37,7 @@ public class cadr {
             String cargo = scanner.nextLine();
 
             // Cria o objeto 'funcionarios' com os dados fornecidos
-            funcionario = new funcionarios(nome, cpf, email, telefone, salario, cargo);
+            funcionario = new funcionario(nome, cpf, email, telefone, salario, cargo);
             System.out.println("Funcionário cadastrado com sucesso!\n");
 
             // Saímos do loop após cadastrar um funcionário
@@ -48,4 +47,5 @@ public class cadr {
         // Retorna o objeto 'funcionario' criado
         return funcionario;
     }
+
 }

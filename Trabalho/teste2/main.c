@@ -28,70 +28,72 @@ int main()
         {
         case 1:
 
-            int caixa_id;
+            int caixaId;
             char nome[100];
             long long cpf;
             int prioridade;
-            int num_itens;
+            int numItens;
 
             do
             {
                 printf("Digite o ID do caixa: ");
-                scanf("%d", &caixa_id);
+                scanf("%d", &caixaId);
                 while (getchar() != '\n')
-                    ; // Limpar buffer
+                    ;
 
-                if (!caixas[caixa_id - 1].aberto)
+                if (!caixas[caixaId - 1].aberto)
                 {
-                    printf("Caixa %d está fechado. Por favor, digite outro ID de caixa.\n", caixa_id - 1);
+                    printf("Caixa %d está fechado. Por favor, digite outro ID de caixa.\n", caixaId - 1);
                 }
-            } while (!caixas[caixa_id - 1].aberto);
+            } while (!caixas[caixaId - 1].aberto);
 
             printf("Digite o nome do cliente: ");
             scanf("%s", nome);
             while (getchar() != '\n')
-                ; // Limpar buffer
+                ;
 
             printf("Digite o CPF do cliente: ");
             scanf("%lld", &cpf);
             while (getchar() != '\n')
-                ; // Limpar buffer
+                ;
 
-            printf("Digite a prioridade do cliente: ");
-            scanf("%d", &prioridade);
-            while (getchar() != '\n')
-                ; // Limpar buffer
+            do
+            {
+                printf("Digite a prioridade do cliente (1, 2 ou 3): ");
+                scanf("%d", &prioridade);
+                while (getchar() != '\n')
+                    ;
+                if (prioridade < 1 || prioridade > 3)
+                {
+                    printf("Prioridade inválida. Por favor, digite 1, 2 ou 3.\n");
+                }
+            } while (prioridade < 1 || prioridade > 3);
 
-            printf("Digite o número de itens do cliente: ");
-            scanf("%d", &num_itens);
-            while (getchar() != '\n')
-                ; // Limpar buffer
-
-            cadastrarClienteOrdenado(caixa_id - 1, nome, cpf, prioridade, num_itens);
+            cadastrarClienteOrdenado(caixaId - 1, nome, cpf, prioridade, numItens);
 
             break;
         case 2:
 
             printf("Qual caixa deseja atentar? \n");
-            scanf("%d", &caixa_id);
-            atenderCliente(caixa_id - 1);
+            scanf("%d", &caixaId);
+            atenderCliente(caixaId - 1);
 
             break;
         case 3:
             printf("Digite o ID do caixa que deseja abrir: ");
-            scanf("%d", &caixa_id);
+            scanf("%d", &caixaId);
             while (getchar() != '\n')
-                ; // Limpar buffer
-            abrirCaixa(caixa_id - 1);
+                ;
+            abrirCaixa(caixaId - 1);
 
             break;
 
         case 4:
             printf("Digite o ID do caixa que deseja fechar: ");
-            scanf("%d", &caixa_id);
+            scanf("%d", &caixaId);
             while (getchar() != '\n')
-                ; // Limpar buffer
-            fecharCaixa(caixa_id - 1);
+                ;
+            fecharCaixa(caixaId - 1);
 
         case 5:
             imprimirListaClientesEspera();
