@@ -41,12 +41,12 @@ public class Professor extends Pessoa {
 
     @Override
     public String toString() {
-        return "Professor{" +
-                "titulacao='" + titulacao + '\'' +
-                ", curso='" + curso + '\'' +
-                ", nome='" + getNome() + '\'' +
-                ", endereco='" + getEndereco() + '\'' +
-                '}';
+        return "Professor: \n" +
+                "titulacao: " + titulacao + '\'' +
+                ", curso: " + curso + '\'' +
+                ", nome: " + getNome() + '\'' +
+                ", endereco: " + getEndereco() + '\'' +
+                ", ID: " + ID;
     }
 
 }

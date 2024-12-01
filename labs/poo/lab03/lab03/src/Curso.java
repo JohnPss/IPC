@@ -17,40 +17,48 @@ public class Curso {
         this.diciplinas = new ArrayList<>();
     }
 
-    // public String getNome() {
-    // return nome;
-    // }
+    public String getNome() {
+        return nome;
+    }
 
-    // public HashMap<Integer, Aluno> getAlunos() {
-    // return alunos;
-    // }
+    public HashMap<Integer, Aluno> getAlunos() {
+        return alunos;
+    }
 
-    // public HashMap<Integer, Professor> getProfessores() {
-    // return professores;
-    // }
+    public HashMap<Integer, Professor> getProfessores() {
+        return professores;
+    }
 
-    // public List<Diciplina> getDiciplinas() {
-    // return diciplinas;
-    // }
+    public boolean alunosExiste() {
+        if (alunos.isEmpty()) {
+            return false;
+        }
+        return true;
+    }
 
-    // public void setNome(String nome) {
-    // this.nome = nome;
-    // }
-
-    // public void setAlunos(List<Aluno> alunos) {
-    // this.alunos = alunos;
-    // }
-
-    // public void setProfessores(List<Professor> professores) {
-    // this.professores = professores;
-    // }
-
-    // public void setDiciplinas(List<Diciplina> diciplinas) {
-    // this.diciplinas = diciplinas;
-    // }
+    public boolean matriculaAlunoExiste(int matricula) {
+        if (alunos.containsKey(matricula)) {
+            return true;
+        }
+        return false;
+    }
 
     public void addAluno(Aluno aluno) {
         this.alunos.put(aluno.getMatricula(), aluno);
+    }
+
+    public boolean professoresExiste() {
+        if (professores.isEmpty()) {
+            return false;
+        }
+        return true;
+    }
+
+    public boolean idProfessorExiste(int id) {
+        if (professores.containsKey(id)) {
+            return true;
+        }
+        return false;
     }
 
     public void addProfessor(Professor professor) {
@@ -64,6 +72,12 @@ public class Curso {
     public void imprimirAlunos() {
         for (Aluno aluno : alunos.values()) {
             System.out.println(aluno);
+        }
+    }
+
+    public void imprimirProfessor() {
+        for (Professor professor : professores.values()) {
+            System.out.println(professor);
         }
     }
 
@@ -81,11 +95,10 @@ public class Curso {
 
     @Override
     public String toString() {
-        return "Curso{" +
-                "nome='" + nome + '\'' +
-                ", alunos=" + alunos +
-                ", professores=" + professores +
-                ", diciplinas=" + diciplinas +
-                '}';
+        return "Curso: \n" +
+                "nome:" + nome + '\'' +
+                ", alunos: " + alunos +
+                ", professores: " + professores +
+                ", diciplinas: " + diciplinas;
     }
 }
