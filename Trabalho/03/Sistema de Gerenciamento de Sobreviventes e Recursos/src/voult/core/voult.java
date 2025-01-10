@@ -1,10 +1,11 @@
-package voult.model;
+package voult.core;
 
 import java.util.ArrayList;
+import voult.model.*;
 
 public class voult {
     private ArrayList<Sobrevivente> sobreviventes;
-    private ArrayList<Recursos> recursos;
+    private ArrayList<Recurso> recursos;
     private ArrayList<Missoes> missoes;
 
 }

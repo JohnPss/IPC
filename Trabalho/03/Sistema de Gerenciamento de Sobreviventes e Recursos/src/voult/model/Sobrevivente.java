@@ -1,28 +1,35 @@
 package voult.model;
 
+import voult.enums.StatusSobreviventeEnum;
+import voult.enums.HabilidadeEnum;
 import java.util.ArrayList;
 
 public class Sobrevivente extends Pessoa {
-    private ArrayList<String> habilidades;
-    private String status;
+    private ArrayList<HabilidadeEnum> habilidades;
+    private StatusSobreviventeEnum status;
 
-    public ArrayList<String> getHabilidades() {
-        return habilidades;
+    public void addHabilidade(HabilidadeEnum habilidade) {
+        habilidades.add(habilidade);
     }
 
-    public void setHabilidades(ArrayList<String> habilidades) {
+    public ArrayList<HabilidadeEnum> getHabilidades() {
+        return new ArrayList<>(habilidades);
+    }
+
+    public void setHabilidades(ArrayList<HabilidadeEnum> habilidades) {
         this.habilidades = habilidades;
     }
 
-    public String getStatus() {
+    public StatusSobreviventeEnum getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(StatusSobreviventeEnum status) {
         this.status = status;
     }
 
-    public Sobrevivente(String nome, int idade, String indentificador, ArrayList<String> habilidades, String status) {
+    public Sobrevivente(String nome, int idade, String indentificador, ArrayList<HabilidadeEnum> habilidades,
+            StatusSobreviventeEnum status) {
         super(nome, idade, indentificador);
         this.habilidades = habilidades;
         this.status = status;
