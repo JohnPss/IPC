@@ -1,4 +1,3 @@
-import java.io.ObjectInputFilter.Status;
 import java.util.Scanner;
 
 import voult.enums.*;
@@ -82,13 +81,67 @@ public class Main {
                     }
 
                     sobrevivente.addHabilidade(habilidade);
+                    System.out.println("Habilidade adicionada com sucesso!");
 
                     break;
                 case 3:
-                    // Remover habilidade de um sobrevivente
+                    // sendo usando 2 vezes o mesmo código, podemos criar uma função para reutilizar
+                    Sobrevivente sobreviventeH = null;
+                    while (sobreviventeH == null) {
+                        System.out.println("Digite o nome do sobrevivente: ");
+                        String nomeSobrevivente = scanner.next();
+
+                        try {
+                            sobreviventeH = voult101.getSobrevivente(nomeSobrevivente);
+                        } catch (Exception e) {
+                            System.out.println("Nome de sobrevivmente não encontrado. Digite novamente: ");
+                        }
+                    }
+
+                    System.out.println("Habilidades do sobrevivente: ");
+                    for (HabilidadeEnum hab : sobreviventeH.getHabilidades()) {
+                        System.out.println("Numero: " + hab.getValor() + ": " + hab);
+                    }
+
+                    HabilidadeEnum habilidadeR = null;
+                    while (habilidadeR == null) {
+                        System.out.println("Selecione o numero da habilidade que deseja retirar: ");
+                        int optionHabilidade = scanner.nextInt();
+                        scanner.nextLine();
+
+                        try {
+                            habilidadeR = HabilidadeEnum.fromkey(optionHabilidade);
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("Numero de habilidade invalida: ");
+                        }
+                    }
+
+                    sobreviventeH.removerHabilidade(habilidadeR);
+                    System.out.println("Habilidade removida com sucesso!");
+
                     break;
                 case 4:
-                    // Adicionar recurso ao Vault
+
+                    System.out.println("Selecione o nome do recuso que deseja adicionar: ");
+                    TipoRecursoEnum.exibirRecursos();
+
+                    TipoRecursoEnum tipoRecurso = null;
+                    while (tipoRecurso == null) {
+                        System.out.println("Digite o numero do tipo de recurso: ");
+                        int tipoRecursoInt = scanner.nextInt();
+                        try {
+                            tipoRecurso = TipoRecursoEnum.fromkey(tipoRecursoInt);
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("Numero de tipo de recurso inválido. Digite novamente: ");
+                        }
+                    }
+
+                    System.out.println("Digite a quantidade do recurso: ");
+                    int quantidade = scanner.nextInt();
+
+                    voult101.addRecurso(new Recurso(tipoRecurso, quantidade));
+                    System.out.println("Recurso adicionado com sucesso!");
+
                     break;
                 case 5:
                     // Consumir recurso
