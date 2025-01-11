@@ -1,5 +1,6 @@
 package voult.model;
 
+import voult.util.*;
 import voult.enums.StatusSobreviventeEnum;
 import voult.enums.HabilidadeEnum;
 import java.util.ArrayList;
@@ -8,8 +9,20 @@ public class Sobrevivente extends Pessoa {
     private ArrayList<HabilidadeEnum> habilidades;
     private StatusSobreviventeEnum status;
 
-    public void addHabilidade(HabilidadeEnum habilidade) {
-        habilidades.add(habilidade);
+    public boolean addHabilidade(HabilidadeEnum habilidade) {
+        if (!habilidades.contains(habilidade) && habilidades.size() < 3) {
+            habilidades.add(habilidade);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean removerHabilidade(HabilidadeEnum habilidade) {
+        if (habilidades.contains(habilidade)) {
+            habilidades.remove(habilidade);
+            return true;
+        }
+        return false;
     }
 
     public ArrayList<HabilidadeEnum> getHabilidades() {
@@ -28,10 +41,10 @@ public class Sobrevivente extends Pessoa {
         this.status = status;
     }
 
-    public Sobrevivente(String nome, int idade, String indentificador, ArrayList<HabilidadeEnum> habilidades,
+    public Sobrevivente(String nome, int idade,
             StatusSobreviventeEnum status) {
-        super(nome, idade, indentificador);
-        this.habilidades = habilidades;
+        super(nome, idade, IDGenerator.nextUUID());
+        this.habilidades = new ArrayList<>();
         this.status = status;
     }
 }
