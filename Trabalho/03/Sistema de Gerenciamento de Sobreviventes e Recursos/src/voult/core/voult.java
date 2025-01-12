@@ -1,5 +1,6 @@
 package voult.core;
 
+import voult.enums.*;
 import java.util.ArrayList;
 import voult.model.*;
 
@@ -23,7 +24,7 @@ public class voult {
     }
 
     public boolean addRecurso(Recurso recurso) {
-        if (!this.recursos.contains(recurso)) {
+        if (!existeRecursoNome(recurso)) {
             this.recursos.add(recurso);
             return true;
         }
@@ -57,6 +58,46 @@ public class voult {
         }
     }
 
-    // poder encontrar recurso e sobrevivente por missao
+    public void exibirRecursos() {
+        for (Recurso recurso : this.recursos) {
+            System.out.println(
+                    recurso.getNome().getValor() + " - " + recurso.getNome().name() + ": " + recurso.getQuantidade());
+        }
+    }
 
+    public boolean existeRecursoNome(Recurso recurso) {
+        for (Recurso rec : this.recursos) {
+            if (rec.getNome().equals(recurso.getNome())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean addQuantidadeEspecifica(Recurso recurso) {
+        for (Recurso rec : this.recursos) {
+            if (rec.getNome().equals(recurso.getNome())) {
+                rec.adicionarQuantidade(recurso.getQuantidade());
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // troca nome
+    public boolean consumirRecurso(TipoRecursoEnum tipo, int quantidade) {
+        Recurso recurso = encontrarRecurso(tipo);
+        if (recurso != null && quantidade > 0) {
+            return recurso.consumirQuantidade(quantidade);
+        }
+        return false;
+    }
+
+    public Recurso encontrarRecurso(TipoRecursoEnum tipo) {
+        return recursos.stream()
+                .filter(r -> r.getNome().equals(tipo))
+                .findFirst()
+                .orElse(null);
+    }
+    // poder encontrar recurso e sobrevivente por missao
 }

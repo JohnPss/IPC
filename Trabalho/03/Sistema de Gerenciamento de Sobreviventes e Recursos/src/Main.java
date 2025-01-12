@@ -15,7 +15,7 @@ public class Main {
             System.out.println("1: Cadastrar sobrevivente");
             System.out.println("2: Adicionar habilidade a um sobrevivente");
             System.out.println("3: Remover habilidade de um sobrevivente");
-            System.out.println("4: Adicionar recurso ao Vault");
+            System.out.println("4: Adicionar novo recurso ao Vault");
             System.out.println("5: Consumir recurso");
             System.out.println("6: Registrar missão");
             System.out.println("7: Adicionar sobrevivente a uma missão");
@@ -122,7 +122,7 @@ public class Main {
                     break;
                 case 4:
 
-                    System.out.println("Selecione o nome do recuso que deseja adicionar: ");
+                    System.out.println("Selecione o nome do recurso que deseja adicionar: ");
                     TipoRecursoEnum.exibirRecursos();
 
                     TipoRecursoEnum tipoRecurso = null;
@@ -139,12 +139,45 @@ public class Main {
                     System.out.println("Digite a quantidade do recurso: ");
                     int quantidade = scanner.nextInt();
 
-                    voult101.addRecurso(new Recurso(tipoRecurso, quantidade));
-                    System.out.println("Recurso adicionado com sucesso!");
+                    if (voult101.addRecurso(new Recurso(tipoRecurso, quantidade))) {
+                        System.out.println("Recurso adicionado com sucesso!");
+                    } else {
+                        System.out.println("Recurso ja existe.");
+                        try {
+                            voult101.addQuantidadeEspecifica(new Recurso(tipoRecurso, quantidade));
+                        } catch (Exception x) {
+                            System.out.println("Ops, Algo deu errado!");
+                        }
+                        System.out.println("Os valores foram adicionados ao existente.");
+                    }
 
                     break;
                 case 5:
-                    // Consumir recurso
+                    System.out.println("Recursos diponiveis:");
+                    voult101.exibirRecursos();
+
+                    TipoRecursoEnum tipo = null;
+                    while (tipo == null) {
+                        System.out.println("Selecione o numero do rescuso: ");
+                        int optionRecurso = scanner.nextInt();
+                        try {
+                            tipo = TipoRecursoEnum.fromkey(optionRecurso);
+                        } catch (IllegalArgumentException e) {
+                            System.out.println("Numero de recurso inválido. Digite novamente: ");
+                        }
+                    }
+
+                    System.out.println("Digite a quantidade a ser consumida: ");
+                    int quantidadeConsumir = scanner.nextInt();
+                    try {
+                        voult101.consumirRecurso(tipo, quantidadeConsumir);
+                    } catch (IllegalArgumentException e) {
+                        System.out.println("Quantidade invalidada!");
+                        break;
+                    }
+
+                    System.out.println("Recurso consumido com sucesso!");
+
                     break;
                 case 6:
                     // Registrar missão
@@ -156,7 +189,7 @@ public class Main {
                     voult101.exibirSobreviventes();
                     break;
                 case 9:
-                    // Exibir recursos do Vault
+                    voult101.exibirRecursos();
                     break;
                 case 10:
                     // Exibir missões realizadas

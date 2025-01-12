@@ -36,7 +36,7 @@ public class Recurso {
             this.quantidade -= quantidade;
             return true;
         }
-        return false;
+        throw new IllegalArgumentException("Quantidade a adicionar deve ser positiva");
     }
 
     public void adicionarQuantidade(int quantidade) {
