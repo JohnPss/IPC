@@ -63,7 +63,7 @@ public class Main {
                         break;
                     }
 
-                    System.out.println("Sobreviventes disponiveis: ");
+                    System.out.println("Sobreviventes disponiveis para adicionar habilidades: ");
                     voult101.exibirSobreviventes();
 
                     Sobrevivente sobrevivente = null;

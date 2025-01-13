@@ -79,6 +79,22 @@ public class voult {
         }
     }
 
+    public void exbirSobreviventesAptos() {
+        // nao mostrar sobreviventes mortos
+        for (Sobrevivente sobrevivente : this.sobreviventes) {
+            if (!sobrevivente.getStatus().equals(StatusSobreviventeEnum.MORTO)) {
+                System.out.println(sobrevivente.getNome() + " - " + sobrevivente.getIndentificador() + "- "
+                        + sobrevivente.getStatus());
+                try {
+                    System.out.println(sobrevivente.getHabilidades());
+                } catch (IllegalStateException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+
+    }
+
     // public void exibirHabilidadesSobrevivente(Sobrevivente sobrevivente) {
     // System.out.println(sobrevivente.getNome() + " - " +
     // sobrevivente.getHabilidades());
@@ -178,7 +194,13 @@ public class voult {
         }
     }
 
-    // poder encontrar recurso e sobrevivente por missao
+    public boolean verifcarSobreviventeMorto(String id) {
+        Sobrevivente sobrevivente = encontrarSobrevivente(id);
+        if (sobrevivente != null) {
+            return sobrevivente.getStatus().equals(StatusSobreviventeEnum.MORTO);
+        }
+        return false;
+    }
 }
 
 /*
