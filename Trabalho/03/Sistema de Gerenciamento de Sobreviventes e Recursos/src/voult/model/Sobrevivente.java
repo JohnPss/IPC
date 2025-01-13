@@ -10,11 +10,14 @@ public class Sobrevivente extends Pessoa {
     private StatusSobreviventeEnum status;
 
     public boolean addHabilidade(HabilidadeEnum habilidade) {
-        if (!habilidades.contains(habilidade) && habilidades.size() < 3) {
-            habilidades.add(habilidade);
-            return true;
+        if (habilidadeJaExiste(habilidade)) {
+            throw new IllegalArgumentException("Habilidade já existe.");
         }
-        return false;
+        if (habilidades.size() >= 3) {
+            throw new IllegalStateException("Número máximo de habilidades atingido.");
+        }
+        habilidades.add(habilidade);
+        return true;
     }
 
     public boolean removerHabilidade(HabilidadeEnum habilidade) {
@@ -26,7 +29,22 @@ public class Sobrevivente extends Pessoa {
     }
 
     public ArrayList<HabilidadeEnum> getHabilidades() {
+        if (habilidades.isEmpty()) {
+            throw new IllegalStateException("Sobrevivente nao tem habilidades.");
+        }
         return new ArrayList<>(habilidades);
+    }
+
+    public boolean habilidadeJaExiste(HabilidadeEnum hab) {
+        return habilidades.contains(hab);
+    }
+
+    public void validarHabilidadeExiste(HabilidadeEnum hab) {
+        if (habilidadeJaExiste(hab)) {
+            System.out.println("Habilidade existe: " + hab);
+        } else {
+            throw new IllegalArgumentException("Habilidade ja existe.");
+        }
     }
 
     public void setHabilidades(ArrayList<HabilidadeEnum> habilidades) {

@@ -2,6 +2,10 @@ package voult.core;
 
 import voult.enums.*;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
 import voult.model.*;
 
 public class voult {
@@ -36,16 +40,16 @@ public class voult {
             this.missoes.add(missao);
             return true;
         }
-        return false;
+        throw new IllegalArgumentException("Missão já cadastrada");
     }
 
     public ArrayList<Sobrevivente> getSobreviventes() {
         return new ArrayList<>(this.sobreviventes);
     }
 
-    public Sobrevivente getSobrevivente(String nome) {
+    public Sobrevivente getSobrevivente(String ID) {
         for (Sobrevivente sobrevivente : this.sobreviventes) {
-            if (sobrevivente.getNome().equals(nome)) {
+            if (sobrevivente.getIndentificador().equals(ID)) {
                 return sobrevivente;
             }
         }
@@ -54,7 +58,35 @@ public class voult {
 
     public void exibirSobreviventes() {
         for (Sobrevivente sobrevivente : this.sobreviventes) {
-            System.out.println(sobrevivente.getHabilidades());
+            System.out.println(sobrevivente.getNome() + " - " + sobrevivente.getIndentificador());
+            try {
+                System.out.println(sobrevivente.getHabilidades());
+            } catch (IllegalStateException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    public void exibirSobreviventesHabilidades() {
+        for (Sobrevivente sobrevivente : this.sobreviventes) {
+            System.out.println(sobrevivente.getNome() + " - " + sobrevivente.getIndentificador() + "- "
+                    + sobrevivente.getStatus());
+            try {
+                System.out.println(sobrevivente.getHabilidades());
+            } catch (IllegalStateException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    // public void exibirHabilidadesSobrevivente(Sobrevivente sobrevivente) {
+    // System.out.println(sobrevivente.getNome() + " - " +
+    // sobrevivente.getHabilidades());
+    // }
+
+    public void exibirMissoes() {
+        for (Missao missao : this.missoes) {
+            System.out.println(missao.getNome() + " - " + missao.getStatus());
         }
     }
 
@@ -62,6 +94,17 @@ public class voult {
         for (Recurso recurso : this.recursos) {
             System.out.println(
                     recurso.getNome().getValor() + " - " + recurso.getNome().name() + ": " + recurso.getQuantidade());
+        }
+    }
+
+    public void exibirMissoesRealizadas() {
+        for (Missao missao : this.missoes) {
+            System.out.println(missao.getNome() + " - " + missao.getStatus());
+            try {
+                exibirSobreviventesNaMissao(missao);
+            } catch (IllegalStateException e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 
@@ -93,11 +136,63 @@ public class voult {
         return false;
     }
 
-    public Recurso encontrarRecurso(TipoRecursoEnum tipo) {
-        return recursos.stream()
-                .filter(r -> r.getNome().equals(tipo))
+    public Sobrevivente encontrarSobrevivente(String identificador) {
+        return sobreviventes.stream()
+                .filter(s -> s.getIndentificador().equals(identificador))
                 .findFirst()
                 .orElse(null);
     }
+
+    public Recurso encontrarRecurso(TipoRecursoEnum nome) {
+        return recursos.stream()
+                .filter(r -> r.getNome().equals(nome))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public Missao encontrarMissao(String nome) {
+        return missoes.stream()
+                .filter(m -> m.getNome().equals(nome))
+                .findFirst()
+                .orElse(null);
+    }
+
+    public void exibirSobreviventesNaMissao(Missao missao) {
+        Map<String, Sobrevivente> sobreviventesMap = sobreviventes.stream()
+                .collect(Collectors.toMap(
+                        Sobrevivente::getIndentificador,
+                        s -> s));
+
+        boolean hasSurvivors = missao.getSobreviventes().stream()
+                .map(sobreviventesMap::get)
+                .filter(Objects::nonNull)
+                .peek(sobrevivente -> {
+                    System.out.println(sobrevivente.getNome());
+                    System.out.println("Habilidades: " + sobrevivente.getHabilidades());
+                    System.out.println("Status: " + sobrevivente.getStatus());
+                })
+                .count() > 0;
+
+        if (!hasSurvivors) {
+            throw new IllegalStateException("Nenhum sobrevivente encontrado na missão.");
+        }
+    }
+
     // poder encontrar recurso e sobrevivente por missao
 }
+
+/*
+ * public void exibirSobreviventesNaMissao(Missao missao) {
+ * Map<String, Sobrevivente> sobreviventesMap = sobreviventes.stream()
+ * .collect(Collectors.toMap(
+ * Sobrevivente::getIndentificador,
+ * s -> s));
+ * 
+ * missao.getSobreviventes().stream()
+ * .map(sobreviventesMap::get)
+ * .filter(Objects::nonNull)
+ * .map(Sobrevivente::getNome)
+ * .forEach(System.out::println);
+ * }
+ * 
+ */
