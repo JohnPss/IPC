@@ -33,7 +33,8 @@ public class Main {
             switch (option) {
                 case 1:
                     System.out.println("Digite o nome do sobrevivente: ");
-                    String nome = scanner.next();
+                    scanner.nextLine();
+                    String nome = scanner.nextLine();
 
                     System.out.println("Digite a idade do sobrevivente: ");
                     int idade = scanner.nextInt();
@@ -320,6 +321,7 @@ public class Main {
                     voult101.exibirSobreviventesHabilidades();
                     break;
                 case 9:
+                    System.out.println("Recursos disponíveis:");
                     voult101.exibirRecursos();
                     break;
                 case 10:
