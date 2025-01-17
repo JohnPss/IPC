@@ -3,7 +3,7 @@ package voult.model;
 public class Pessoa {
     private String nome;
     private int idade;
-    private String indentificador;
+    private final String indentificador;
 
     public Pessoa(String nome, int idade, String indentificador) {
         this.nome = nome;
@@ -30,9 +30,4 @@ public class Pessoa {
     public String getIndentificador() {
         return indentificador;
     }
-
-    public void setIndentificador(String indentificador) {
-        this.indentificador = indentificador;
-    }
-
 }

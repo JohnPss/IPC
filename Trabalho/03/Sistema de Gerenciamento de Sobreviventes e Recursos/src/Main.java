@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import voult.enums.*;
@@ -11,6 +12,8 @@ public class Main {
         voult voult101 = new voult();
         Scanner scanner = new Scanner(System.in);
         Menu menu = new Menu();
+
+        // TestDataPopulator.popularDados(voult101);
 
         int option;
 
@@ -36,9 +39,23 @@ public class Main {
                     scanner.nextLine();
                     String nome = scanner.nextLine();
 
-                    System.out.println("Digite a idade do sobrevivente: ");
-                    int idade = scanner.nextInt();
-                    scanner.nextLine();
+                    int idade = 0;
+                    boolean idadeValida = false;
+                    while (!idadeValida) {
+                        try {
+                            System.out.println("Digite a idade do sobrevivente: ");
+                            idade = scanner.nextInt();
+                            scanner.nextLine();
+                            if (idade < 0) {
+                                System.out.println("Por favor, digite uma idade válida (número positivo).");
+                                continue;
+                            }
+                            idadeValida = true;
+                        } catch (InputMismatchException e) {
+                            System.out.println("Erro: Por favor, digite um número válido.");
+                            scanner.nextLine();
+                        }
+                    }
 
                     System.out.println("\nStatus: ");
                     StatusSobreviventeEnum.exibirStatus();
@@ -129,8 +146,10 @@ public class Main {
                         }
                     }
 
-                    if (sobreviventeH.getHabilidades().isEmpty()) {
-                        System.out.println("O sobrevivente não possui habilidades para remover.");
+                    try {
+                        sobreviventeH.getHabilidades();
+                    } catch (Exception e) {
+                        System.out.println("Erro ao verificar habilidades do sobrevivente: " + e.getMessage());
                         break;
                     }
 
@@ -225,11 +244,12 @@ public class Main {
                     break;
                 case 6:
                     System.out.println("Digite o nome da missão:");
-                    String nomeMissao = scanner.next();
+                    scanner.nextLine(); // Consume the newline left-over
+                    String nomeMissao = scanner.nextLine();
                     System.out.println("Digite o objetivo da missão:");
-                    String objetivoMissao = scanner.next();
+                    String objetivoMissao = scanner.nextLine();
                     System.out.println("Digite o local da missão:");
-                    String localMissao = scanner.next();
+                    String localMissao = scanner.nextLine();
 
                     Missao missao = new Missao(nomeMissao, objetivoMissao, localMissao, new ArrayList<>(), null);
                     while (missao.getStatus() == null) {
@@ -307,7 +327,8 @@ public class Main {
                     voult101.exibirMissoes();
 
                     System.out.println("Digite o nome da missao:");
-                    nomeMissao = scanner.next();
+                    scanner.nextLine(); // Consume the newline left-over
+                    nomeMissao = scanner.nextLine();
                     Missao missao2 = voult101.encontrarMissao(nomeMissao);
 
                     try {

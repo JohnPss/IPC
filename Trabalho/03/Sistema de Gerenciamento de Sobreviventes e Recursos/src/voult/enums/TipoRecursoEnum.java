@@ -1,7 +1,7 @@
 package voult.enums;
 
 public enum TipoRecursoEnum {
-    AGUA(1), COMIDA(2), REMEDIO(3), MUNICAO(4), PARTESMECANICAS(5);
+    AGUA(1), COMIDA(2), REMEDIO(3), MUNICAO(4), PARTES_MECANICAS(5);
 
     private final int valor;
 

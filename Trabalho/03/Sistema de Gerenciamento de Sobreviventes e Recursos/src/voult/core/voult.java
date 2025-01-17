@@ -69,8 +69,10 @@ public class voult {
 
     public void exibirSobreviventesHabilidades() {
         for (Sobrevivente sobrevivente : this.sobreviventes) {
-            System.out.println(sobrevivente.getNome() + " - " + sobrevivente.getIndentificador() + "- "
-                    + sobrevivente.getStatus());
+            System.out
+                    .println("Nome: " + sobrevivente.getNome() + " - ID: " + sobrevivente.getIndentificador()
+                            + "- Status "
+                            + sobrevivente.getStatus() + " - " + "Idade: " + sobrevivente.getIdade());
             try {
                 System.out.println(sobrevivente.getHabilidades());
             } catch (IllegalStateException e) {
@@ -95,11 +97,6 @@ public class voult {
 
     }
 
-    // public void exibirHabilidadesSobrevivente(Sobrevivente sobrevivente) {
-    // System.out.println(sobrevivente.getNome() + " - " +
-    // sobrevivente.getHabilidades());
-    // }
-
     public void exibirMissoes() {
         for (Missao missao : this.missoes) {
             System.out.println(missao.getNome() + " - " + missao.getStatus());
@@ -121,6 +118,8 @@ public class voult {
             } catch (IllegalStateException e) {
                 System.out.println(e.getMessage());
             }
+
+            System.out.println('\n');
         }
     }
 
@@ -143,7 +142,6 @@ public class voult {
         return false;
     }
 
-    // troca nome
     public boolean consumirRecurso(TipoRecursoEnum tipo, int quantidade) {
         Recurso recurso = encontrarRecurso(tipo);
         if (recurso != null && quantidade > 0) {
@@ -202,19 +200,3 @@ public class voult {
         return false;
     }
 }
-
-/*
- * public void exibirSobreviventesNaMissao(Missao missao) {
- * Map<String, Sobrevivente> sobreviventesMap = sobreviventes.stream()
- * .collect(Collectors.toMap(
- * Sobrevivente::getIndentificador,
- * s -> s));
- * 
- * missao.getSobreviventes().stream()
- * .map(sobreviventesMap::get)
- * .filter(Objects::nonNull)
- * .map(Sobrevivente::getNome)
- * .forEach(System.out::println);
- * }
- * 
- */
