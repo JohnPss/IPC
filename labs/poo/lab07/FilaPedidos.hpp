@@ -7,7 +7,7 @@ class FilaPedidos
 {
 private:
     NoPedido *cabeca;
-    NoPedido *calda;
+    NoPedido *cauda;
 
 public:
     FilaPedidos();
@@ -15,5 +15,5 @@ public:
     virtual ~FilaPedidos();
     void enfilerarPedido(Pedido pedido);
     Pedido desenfilerarPedido();
-    void exbirPedidos();
+    void exibirPedidos();
 };

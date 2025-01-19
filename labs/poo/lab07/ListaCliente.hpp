@@ -5,7 +5,7 @@ class ListaCliente
 {
 private:
     NoCliente *cabeca;
-    NoCliente *calda;
+    NoCliente *cauda;
 
 public:
     ListaCliente();

@@ -1,7 +1,7 @@
 #include "ListaCliente.hpp"
 #include <iostream>
 
-ListaCliente::ListaCliente() : cabeca(nullptr), calda(nullptr) {}
+ListaCliente::ListaCliente() : cabeca(nullptr), cauda(nullptr) {}
 
 ListaCliente::~ListaCliente()
 {
@@ -12,7 +12,7 @@ ListaCliente::ListaCliente(Pessoa cliente)
 {
     NoCliente *novo = new NoCliente(cliente);
     cabeca = novo;
-    calda = novo;
+    cauda = novo;
 }
 
 void ListaCliente::adicionarCliente(Pessoa cliente)
@@ -22,12 +22,12 @@ void ListaCliente::adicionarCliente(Pessoa cliente)
     if (cabeca == nullptr)
     {
         cabeca = novo;
-        calda = novo;
+        cauda = novo;
     }
     else
     {
-        calda->setProx(novo);
-        calda = novo;
+        cauda->setProx(novo);
+        cauda = novo;
     }
 }
 

@@ -3,24 +3,20 @@
 HistoricoPedidos::HistoricoPedidos(ListaCliente &lista)
     : inicio(nullptr), listaClientes(lista) {}
 
-// Adiciona um pedido concluído ao histórico
 void HistoricoPedidos::adicionarPedido(const Pedido &pedido)
 {
     NoPedidoHistorico *novo = new NoPedidoHistorico(pedido);
 
-    // Se for o primeiro pedido
     if (inicio == nullptr)
     {
         inicio = novo;
         return;
     }
 
-    // Adiciona no início da lista
     novo->setProx(inicio);
     inicio = novo;
 }
 
-// Exibe todos os pedidos do histórico com dados dos clientes
 void HistoricoPedidos::exibirHistorico()
 {
     if (inicio == nullptr)

@@ -8,66 +8,126 @@
 
 using namespace std;
 
+void exibirMenu()
+{
+    cout << "\n====== MENU DO RESTAURANTE ======" << endl;
+    cout << "1. Adicionar novo cliente" << endl;
+    cout << "2. Adicionar novo pedido" << endl;
+    cout << "3. Preparar próximo pedido" << endl;
+    cout << "4. Exibir pedidos em espera" << endl;
+    cout << "5. Exibir histórico de pedidos" << endl;
+    cout << "6. Exibir lista de clientes" << endl;
+    cout << "7. Sair" << endl;
+    cout << "==============================" << endl;
+    cout << "Escolha uma opção: ";
+}
+
 int main()
 {
-    // Criando a lista de clientes e as filas
     ListaCliente listaClientes;
     FilaPedidos filaPedidos;
     HistoricoPedidos historicoPedidos(listaClientes);
+    int opcao;
+    int codigoPedido = 1;
 
-    // Cadastrando alguns clientes
-    Pessoa p1("João Silva", "123.456.789-00");
-    Pessoa p2("Maria Santos", "987.654.321-00");
-    Pessoa p3("José Oliveira", "456.789.123-00");
-
-    cout << "\nAdicionando clientes à lista..." << endl;
-    listaClientes.adicionarCliente(p1);
-    listaClientes.adicionarCliente(p2);
-    listaClientes.adicionarCliente(p3);
-
-    cout << "\nExibindo clientes cadastrados:" << endl;
-    listaClientes.exibirClientes();
-
-    // Criando alguns pedidos
-    cout << "\nCriando pedidos..." << endl;
-    Pedido ped1(1, "Pizza Margherita", 30, "123.456.789-00");
-    Pedido ped2(2, "Pizza Calabresa", 25, "987.654.321-00");
-    Pedido ped3(3, "Pizza Portuguesa", 28, "456.789.123-00");
-
-    // Adicionando pedidos à fila
-    cout << "\nAdicionando pedidos à fila..." << endl;
-    filaPedidos.enfilerarPedido(ped1);
-    filaPedidos.enfilerarPedido(ped2);
-    filaPedidos.enfilerarPedido(ped3);
-
-    // Exibindo pedidos em espera
-    cout << "\nExibindo pedidos em espera:" << endl;
-    filaPedidos.exbirPedidos();
-
-    // Preparando alguns pedidos (movendo para o histórico)
-    cout << "\nPreparando pedidos..." << endl;
-    try
+    do
     {
-        Pedido pedidoConcluido = filaPedidos.desenfilerarPedido();
-        cout << "Pedido #" << pedidoConcluido.getCodigoPedido() << " concluído!" << endl;
-        historicoPedidos.adicionarPedido(pedidoConcluido);
+        exibirMenu();
+        cin >> opcao;
+        cin.ignore();
 
-        pedidoConcluido = filaPedidos.desenfilerarPedido();
-        cout << "Pedido #" << pedidoConcluido.getCodigoPedido() << " concluído!" << endl;
-        historicoPedidos.adicionarPedido(pedidoConcluido);
-    }
-    catch (const runtime_error &e)
-    {
-        cout << "Erro: " << e.what() << endl;
-    }
+        switch (opcao)
+        {
+        case 1:
+        {
+            string nome, cpf;
+            cout << "\nDigite o nome do cliente: ";
+            getline(cin, nome);
+            cout << "Digite o CPF do cliente: ";
+            getline(cin, cpf);
 
-    // Exibindo estado atual da fila
-    cout << "\nExibindo pedidos ainda em espera:" << endl;
-    filaPedidos.exbirPedidos();
+            Pessoa novoCliente(nome, cpf);
+            listaClientes.adicionarCliente(novoCliente);
+            cout << "Cliente cadastrado com sucesso!" << endl;
+            break;
+        }
 
-    // Exibindo histórico de pedidos
-    cout << "\nExibindo histórico de pedidos concluídos:" << endl;
-    historicoPedidos.exibirHistorico();
+        case 2:
+        {
+            string cpf, descricao;
+            int tempo;
+
+            cout << "\nDigite o CPF do cliente: ";
+            getline(cin, cpf);
+
+            Pessoa cliente = listaClientes.buscarClientePorCPF(cpf);
+            if (cliente.getCpf() == "")
+            {
+                cout << "Cliente não encontrado!" << endl;
+                break;
+            }
+
+            cout << "Digite a descrição do pedido: ";
+            getline(cin, descricao);
+            cout << "Digite o tempo estimado (em minutos): ";
+            cin >> tempo;
+            cin.ignore();
+
+            Pedido novoPedido(codigoPedido++, descricao, tempo, cpf);
+            filaPedidos.enfilerarPedido(novoPedido);
+            cout << "Pedido adicionado com sucesso!" << endl;
+            break;
+        }
+
+        case 3:
+        {
+            try
+            {
+                Pedido pedidoConcluido = filaPedidos.desenfilerarPedido();
+                historicoPedidos.adicionarPedido(pedidoConcluido);
+                cout << "Pedido #" << pedidoConcluido.getCodigoPedido() << " preparado e movido para o histórico!" << endl;
+            }
+            catch (const runtime_error &e)
+            {
+                cout << e.what() << endl;
+            }
+            break;
+        }
+
+        case 4:
+        {
+            cout << "\nPedidos em espera:" << endl;
+            filaPedidos.exibirPedidos();
+            break;
+        }
+
+        case 5:
+        {
+            cout << "\nHistórico de pedidos:" << endl;
+            historicoPedidos.exibirHistorico();
+            break;
+        }
+
+        case 6:
+        {
+            cout << "\nLista de clientes:" << endl;
+            listaClientes.exibirClientes();
+            break;
+        }
+
+        case 7:
+        {
+            cout << "Encerrando o programa..." << endl;
+            break;
+        }
+
+        default:
+        {
+            cout << "Opção inválida! Tente novamente." << endl;
+            break;
+        }
+        }
+    } while (opcao != 7);
 
     return 0;
 }

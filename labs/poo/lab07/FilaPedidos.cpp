@@ -1,12 +1,11 @@
-
 #include "FilaPedidos.hpp"
 
-FilaPedidos::FilaPedidos() : cabeca(nullptr), calda(nullptr) {}
+FilaPedidos::FilaPedidos() : cabeca(nullptr), cauda(nullptr) {}
 
 FilaPedidos::FilaPedidos(Pedido pedido)
 {
     cabeca = new NoPedido(pedido);
-    calda = cabeca;
+    cauda = cabeca;
 }
 
 FilaPedidos::~FilaPedidos()
@@ -21,12 +20,12 @@ void FilaPedidos::enfilerarPedido(Pedido pedido)
     if (cabeca == nullptr)
     {
         cabeca = novoPedido;
-        calda = cabeca;
+        cauda = cabeca;
     }
     else
     {
-        calda->setProx(novoPedido);
-        calda = novoPedido;
+        cauda->setProx(novoPedido);
+        cauda = novoPedido;
     }
 }
 
@@ -43,14 +42,14 @@ Pedido FilaPedidos::FilaPedidos::desenfilerarPedido()
 
     if (cabeca == nullptr)
     {
-        calda = nullptr;
+        cauda = nullptr;
     }
 
     delete temp;
     return pedido;
 }
 
-void FilaPedidos::exbirPedidos()
+void FilaPedidos::exibirPedidos()
 {
     NoPedido *aux = cabeca;
 
