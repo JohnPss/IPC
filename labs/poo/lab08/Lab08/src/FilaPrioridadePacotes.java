@@ -1,19 +1,24 @@
 import java.util.PriorityQueue;
 
 public class FilaPrioridadePacotes {
-    private PriorityQueue<Pacote> filaPrioritaria;
+    private PriorityQueue<Pacote> filaPrioridade = new PriorityQueue<Pacote>();
 
     public void adicionarPacote(Pacote pacote) {
-        filaPrioritaria.add(pacote);
+        filaPrioridade.add(pacote);
+        System.out.println("Pacote adicionado com sucesso!");
     }
 
     public Pacote removerPacote() {
-        return filaPrioritaria.poll();
+        return filaPrioridade.poll();
     }
 
-    public void exbirFila() {
-        for (Pacote p : filaPrioritaria) {
-            p.toString();
+    public void exibirFila() {
+        for (Pacote pacote : filaPrioridade) {
+            System.out.println(pacote);
         }
+    }
+
+    public boolean isEmpty() {
+        return filaPrioridade.isEmpty();
     }
 }

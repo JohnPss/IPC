@@ -35,33 +35,63 @@ public class GerenciamentoPacotes {
                     clientes.adicionarCliente(nome, cpf);
                     break;
                 case 2:
-                    System.out.print("CPF do cliente: ");
-                    String cpfPacote = scanner.nextLine();
-                    System.out.print("Pacote é prioritário? (S/N): ");
-                    boolean isPrioritario = scanner.nextLine().equalsIgnoreCase("S");
-                    clientes.buscarCliente(cpfPacote);
+                    clientes.exibirClientes();
+                    System.out.println("Digite o CPF do cliente: ");
+                    String CPF = scanner.nextLine();
+                    Cliente cliente = clientes.buscarCliente(CPF);
+                    if (cliente != null) {
+                        System.out.println("Digite o codigo do pacote: ");
+                        int codigoPacote = scanner.nextInt();
+                        scanner.nextLine();
+                        System.out.println("Digite a descrição do pacote: ");
+                        String descricao = scanner.nextLine();
+                        System.out.println("Digite a prioridade do pacote: 1 (Prioridade) 2, (Normal) ");
 
-                    break;
-                case 3:
-                    Pacote pacoteProcessado = filaPrioridade.isEmpty() ? filaEntrada.poll() : filaPrioridade.poll();
-                    if (pacoteProcessado != null) {
-                        historico.add(pacoteProcessado);
+                        int prioridade = scanner.nextInt();
+                        if (prioridade == 1 && prioridade == 2) {
+                            System.out.println("Prioridade inválida!");
+                            break;
+
+                        }
+
+                        Pacote pacote = new Pacote(codigoPacote, descricao, prioridade, CPF);
+                        if (pacote.getPrioridade() == 1) {
+                            filaPrioridade.adicionarPacote(pacote);
+                        } else {
+                            filaEntrada.adicionarPacote(pacote);
+                        }
+                    } else {
+                        System.out.println("Cliente não encontrado!");
                     }
                     break;
+                case 3:
+                    if (!filaPrioridade.isEmpty()) {
+                        Pacote pacote2 = filaPrioridade.removerPacote();
+                        historico.adicionarAoHistorico(pacote2);
+                        System.out.println("Pacote entregue com sucesso!");
+                    } else if (!filaEntrada.isEmpty()) {
+                        Pacote pacote2 = filaEntrada.removerPacote();
+                        historico.adicionarAoHistorico(pacote2);
+                        System.out.println("Pacote entregue com sucesso!");
+                    } else {
+                        System.out.println("Não há pacotes para serem entregues!");
+                    }
+
+                    break;
                 case 4:
-                    filaEntrada.forEach(System.out::println);
+                    filaEntrada.exbirFila();
+
                     break;
                 case 5:
-                    filaPrioridade.forEach(System.out::println);
+                    filaPrioridade.exibirFila();
                     break;
                 case 6:
-                    historico.forEach(System.out::println);
+                    historico.exbirHistorico();
                     break;
                 case 7:
-                    clientes.forEach(System.out::println);
+                    clientes.exibirClientes();
                     break;
                 case 8:
-                    System.out.println("Programa encerrado.");
                     return;
             }
         }

@@ -1,4 +1,5 @@
 import java.util.Queue;
+import java.util.LinkedList;
 
 public class FilaEntradaPacotes {
     private Queue<Pacote> fila;
@@ -13,7 +14,15 @@ public class FilaEntradaPacotes {
 
     public void exbirFila() {
         for (Pacote p : fila) {
-            p.toString();
+            System.out.println(p.toString());
         }
+    }
+
+    public boolean isEmpty() {
+        return fila.isEmpty();
+    }
+
+    public FilaEntradaPacotes() {
+        this.fila = new LinkedList<Pacote>();
     }
 }

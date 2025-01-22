@@ -14,7 +14,11 @@ public class ListaCliente {
 
     public void exibirClientes() {
         for (Cliente c : clientes) {
-            c.toString();
+            System.out.println(c.toString());
         }
+    }
+
+    public ListaCliente() {
+        this.clientes = new ArrayList<>();
     }
 }

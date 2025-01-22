@@ -2,22 +2,26 @@ public class Pacote implements Comparable<Pacote> {
     private int codigoPacote;
     private String descricao;
     private int prioridade;
-    private String cpf;
 
-    public Pacote(int codigoPacote, String descricao, int prioridade, String cpf) {
+    public int getPrioridade() {
+        return prioridade;
+    }
+
+    private String CPF;
+
+    Pacote(int codigoPacote, String descricao, int prioridade, String CPF) {
         this.codigoPacote = codigoPacote;
         this.descricao = descricao;
         this.prioridade = prioridade;
-        this.cpf = cpf;
+        this.CPF = CPF;
     }
 
-    public int compareTo(Pacote outro) {
-        return Integer.compare(this.prioridade, outro.prioridade);
+    public int compareTo(Pacote outroPacote) {
+        return Integer.compare(this.prioridade, outroPacote.prioridade);
     }
 
-    @Override
     public String toString() {
-        return "Pacote [codigoPacote=" + codigoPacote + ", cpf=" + cpf + ", descricao=" + descricao + ", prioridade="
-                + prioridade + "]";
+        return "Pacote: " + codigoPacote + " Descricao: " + descricao + " Prioridade: " + prioridade + " CPF: " + CPF;
+
     }
 }

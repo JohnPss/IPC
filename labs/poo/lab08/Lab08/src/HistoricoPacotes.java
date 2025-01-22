@@ -9,7 +9,11 @@ public class HistoricoPacotes {
 
     public void exbirHistorico() {
         for (Pacote p : historico) {
-            p.toString();
+            System.out.println(p.toString());
         }
+    }
+
+    public HistoricoPacotes() {
+        this.historico = new ArrayList<Pacote>();
     }
 }
