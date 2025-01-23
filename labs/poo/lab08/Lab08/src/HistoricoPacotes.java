@@ -7,7 +7,7 @@ public class HistoricoPacotes {
         historico.add(pacote);
     }
 
-    public void exbirHistorico() {
+    public void exibirHistorico() {
         for (Pacote p : historico) {
             System.out.println(p.toString());
         }

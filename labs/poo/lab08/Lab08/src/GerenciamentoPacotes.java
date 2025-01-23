@@ -79,14 +79,14 @@ public class GerenciamentoPacotes {
 
                     break;
                 case 4:
-                    filaEntrada.exbirFila();
+                    filaEntrada.exibirFila();
 
                     break;
                 case 5:
                     filaPrioridade.exibirFila();
                     break;
                 case 6:
-                    historico.exbirHistorico();
+                    historico.exibirHistorico();
                     break;
                 case 7:
                     clientes.exibirClientes();

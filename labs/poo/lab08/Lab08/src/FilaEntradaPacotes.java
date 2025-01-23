@@ -12,7 +12,7 @@ public class FilaEntradaPacotes {
         return fila.poll();
     }
 
-    public void exbirFila() {
+    public void exibirFila() {
         for (Pacote p : fila) {
             System.out.println(p.toString());
         }

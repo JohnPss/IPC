@@ -25,7 +25,7 @@ public class Cliente {
 
     @Override
     public String toString() {
-        return "Cliente CPF:" + cpf + ", Nome:" + nome;
+        return "- CPF:" + cpf + ", Nome:" + nome;
     }
 
 }
