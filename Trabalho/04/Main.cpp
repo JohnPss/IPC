@@ -2,11 +2,13 @@
 #include <fstream>
 #include <vector>
 #include <sstream>
+#include "Astronauta.hpp"
 
 using namespace std;
 
 void lerMatrizELista(const string &nomeArquivo)
 {
+
     ifstream arquivo(nomeArquivo);
     if (!arquivo.is_open())
     {
@@ -31,24 +33,45 @@ void lerMatrizELista(const string &nomeArquivo)
     cout << "Lixo: " << lixo << endl;
     arquivo.ignore();
 
+    int nivelSaude, urgenciaMedico;
+    string nome;
     string linha;
     while (getline(arquivo, linha))
     {
-
+        if (linha == "Posições dos astronautas na matriz:")
+        {
+            break;
+        }
         stringstream ss(linha);
 
-        string nome;
         getline(ss, nome, ',');
 
         nome.erase(0, nome.find_first_not_of(" "));
         nome.erase(nome.find_last_not_of(" ") + 1);
 
-        int nivelSaude, urgenciaMedico;
-
         char virgula;
         ss >> nivelSaude >> virgula >> urgenciaMedico;
 
-        cout << "Nome: " << nome << ", Nota 1: " << nivelSaude << ", Nota 2: " << urgenciaMedico << endl;
+        cout << "Nome: " << nome << ", Nivel Saude: " << nivelSaude << ", Urgencia: " << urgenciaMedico << endl;
+    }
+
+    int x, y;
+    while (getline(arquivo, linha))
+    {
+        stringstream ss(linha);
+
+        string nome;
+        getline(ss, nome, ':');
+
+        nome.erase(0, nome.find_first_not_of(" "));
+        nome.erase(nome.find_last_not_of(" ") + 1);
+
+        char virgula;
+        char parenteses;
+        char espaco;
+        ss >> parenteses >> x >> virgula >> y >> parenteses;
+
+        cout << "Nome: " << nome << ", X: " << x << ", Y: " << y << endl;
     }
 
     cout << "Matriz:" << endl;
@@ -61,12 +84,8 @@ void lerMatrizELista(const string &nomeArquivo)
         cout << endl;
     }
 
-    // cout << "Lista Adicional:" << endl;
-    // for (int valor : listaAdicional)
-    // {
-    //     cout << valor << " ";
-    // }
-    // cout << endl;
+    Astronauta a(nome, nivelSaude, urgenciaMedico, x, y);
+    cout << a.toString() << endl;
 }
 
 int main()
