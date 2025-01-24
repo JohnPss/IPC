@@ -7,6 +7,7 @@ private:
 
 public:
     Modulo(char tipo);
+    Modulo();
     char getTipo();
     virtual bool podeAcessar();
 };
