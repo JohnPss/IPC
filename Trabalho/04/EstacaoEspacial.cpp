@@ -74,3 +74,8 @@ EstacaoEspacial::~EstacaoEspacial()
     }
     delete[] this->matriz;
 }
+
+const std::vector<Astronauta> &EstacaoEspacial::getAstronautas() const
+{
+    return astronautas;
+}

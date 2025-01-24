@@ -28,4 +28,5 @@ public:
     std::vector<Astronauta> getAstronautas();
     int getColunas();
     int getLinhas();
+    const std::vector<Astronauta> &getAstronautas() const;
 };
