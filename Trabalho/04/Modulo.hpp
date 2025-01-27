@@ -8,6 +8,9 @@ private:
 public:
     Modulo(char tipo);
     Modulo();
-    char getTipo();
+    char getTipo() const;
     virtual bool podeAcessar();
+    void exibir();
+
+    virtual ~Modulo();
 };

@@ -8,25 +8,31 @@
 #include "ModuloSeguranca.hpp"
 #include "ModuloComFogo.hpp"
 #include "ModuloComAstronauta.hpp"
+#include "Posicao.h"
 #include <vector>
 #include <iostream>
 
 class EstacaoEspacial
 {
 private:
-    Modulo **matriz;
+    std::vector<std::vector<Modulo>> matriz;
     std::vector<Astronauta> astronautas;
     int linhas;
     int colunas;
 
 public:
-    EstacaoEspacial();
+    EstacaoEspacial() = default;
     EstacaoEspacial(int linhas, int colunas);
-    void adicionarModulo(int x, int y, char tipo);
+    void adicionarModulo(size_t x, size_t y, char tipo);
     void adicionarAstronauta(Astronauta astronauta);
-    Modulo **getMatriz();
+    std::vector<std::vector<Modulo>> &getMatriz() { return matriz; }
     std::vector<Astronauta> getAstronautas();
-    int getColunas();
-    int getLinhas();
+    size_t getLinhas() const;
+    size_t getColunas() const;
+    ~EstacaoEspacial();
     const std::vector<Astronauta> &getAstronautas() const;
+    void carregarDoArquivo(std::ifstream &arquivo);
+    void matrizCharToModulo(const std::vector<std::vector<char>> &matrizChar);
+    void exbirMatriz();
+    void exibirAstronautas();
 };

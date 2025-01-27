@@ -1,4 +1,4 @@
-#include <ModuloObstaculo.hpp>
+#include "ModuloObstaculo.hpp"
 
 ModuloObstaculo::ModuloObstaculo(char tipo) : Modulo(tipo)
 {

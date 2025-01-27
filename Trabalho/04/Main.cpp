@@ -3,93 +3,64 @@
 #include <vector>
 #include <sstream>
 #include "Astronauta.hpp"
+#include "RoboDeResgate.hpp"
+#include "EstacaoEspacial.hpp"
+#include <algorithm>
 
 using namespace std;
 
-void lerMatrizELista(const string &nomeArquivo)
+void bfs(int x, int y, int linhas, int colunas, vector<vector<int>> &distancia, vector<vector<bool>> &visitados, vector<vector<char>> &matriz)
 {
+    cout << "chegou no BFS" << endl;
 
-    ifstream arquivo(nomeArquivo);
-    if (!arquivo.is_open())
+    vector<pair<int, int>> direcoes = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+    visitados[x][y] = true;
+    distancia[x][y] = 0;
+    vector<pair<int, int>> fila;
+    fila.push_back({x, y});
+    while (!fila.empty())
     {
-        cerr << "Erro ao abrir o arquivo" << endl;
-        return;
-    }
-
-    int linhas, colunas;
-    arquivo >> linhas >> colunas;
-
-    vector<vector<char>> matriz(linhas, vector<char>(colunas));
-    for (int i = 0; i < linhas; i++)
-    {
-        for (int j = 0; j < colunas; j++)
+        pair<int, int> atual = fila.front();
+        fila.erase(fila.begin());
+        for (auto direcao : direcoes)
         {
-            arquivo >> matriz[i][j];
+            int novoX = atual.first + direcao.first;
+            int novoY = atual.second + direcao.second;
+            if (novoX >= 0 && novoX < linhas && novoY >= 0 && novoY < colunas && !visitados[novoX][novoY] && matriz[novoX][novoY] != 'O' && matriz[novoX][novoY] != 'F')
+            {
+                visitados[novoX][novoY] = true;
+                distancia[novoX][novoY] = distancia[atual.first][atual.second] + 1;
+                fila.push_back({novoX, novoY});
+            }
         }
     }
-
-    string lixo;
-    arquivo >> lixo;
-    cout << "Lixo: " << lixo << endl;
-    arquivo.ignore();
-
-    int nivelSaude, urgenciaMedico;
-    string nome;
-    string linha;
-    while (getline(arquivo, linha))
-    {
-        if (linha == "Posições dos astronautas na matriz:")
-        {
-            break;
-        }
-        stringstream ss(linha);
-
-        getline(ss, nome, ',');
-
-        nome.erase(0, nome.find_first_not_of(" "));
-        nome.erase(nome.find_last_not_of(" ") + 1);
-
-        char virgula;
-        ss >> nivelSaude >> virgula >> urgenciaMedico;
-
-        cout << "Nome: " << nome << ", Nivel Saude: " << nivelSaude << ", Urgencia: " << urgenciaMedico << endl;
-    }
-
-    int x, y;
-    while (getline(arquivo, linha))
-    {
-        stringstream ss(linha);
-
-        string nome;
-        getline(ss, nome, ':');
-
-        nome.erase(0, nome.find_first_not_of(" "));
-        nome.erase(nome.find_last_not_of(" ") + 1);
-
-        char virgula;
-        char parenteses;
-        char espaco;
-        ss >> parenteses >> x >> virgula >> y >> parenteses;
-
-        cout << "Nome: " << nome << ", X: " << x << ", Y: " << y << endl;
-    }
-
-    cout << "Matriz:" << endl;
-    for (const auto &linha : matriz)
-    {
-        for (char valor : linha)
-        {
-            cout << valor << " ";
-        }
-        cout << endl;
-    }
-
-    Astronauta a(nome, nivelSaude, urgenciaMedico, x, y);
-    cout << a.toString() << endl;
 }
 
 int main()
 {
-    lerMatrizELista("Entrada1.txt");
+    EstacaoEspacial estacao;
+    ifstream arquivo("Entrada1.txt");
+    estacao.carregarDoArquivo(arquivo);
+
+    // cout << "Matriz: " << endl;
+    // estacao.exbirMatriz();
+    // cout << "Astronautas: " << endl;
+    // estacao.exibirAstronautas();
+
+    RoboDeResgate robo(estacao);
+    auto distancia = robo.calcularDistancia(0, 0);
+    for (auto linha : distancia)
+    {
+        for (auto d : linha)
+        {
+            cout << d << " ";
+        }
+        cout << endl;
+    }
+
+    // robo.calcularDistancia(0, 0);
+    // robo.iniciarResgate();
+    // robo.gerarRelatorio();
+
     return 0;
 }
