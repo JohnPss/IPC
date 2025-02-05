@@ -9,12 +9,12 @@ Astronauta::Astronauta(std::string nome, int nivelSaude, bool atendimentoUrgente
     this->y = y;
 }
 
-int Astronauta::getX()
+int Astronauta::getX() const
 {
     return x;
 }
 
-int Astronauta::getY()
+int Astronauta::getY() const
 {
     return y;
 }

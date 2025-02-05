@@ -2,6 +2,12 @@
 #include "EstacaoEspacial.hpp"
 #include <vector>
 #include <any>
+#include <queue>
+#include <climits>
+#include <algorithm> // Adicionado para next_permutation
+#include <bits/algorithmfwd.h>
+#include <chrono>
+#include <thread>
 
 class RoboDeResgate
 {
@@ -19,7 +25,11 @@ public:
     RoboDeResgate(EstacaoEspacial &estacao);
     Posicao iniciarResgate();
     std::vector<std::vector<int>> calcularDistancia(int x, int y);
-    int calcularTotalPassos(const std::vector<std::vector<int>> &distancia);
+    bool isPosicaoValida(int x, int y);
+    void moverRobo(Posicao inicio, Posicao fim);
+    void imprimirMatriz(const Posicao &posicaoAtual);
+    int calcularMenorCaminhoResgate();
+    int calcularDistanciaEntrePontos(Posicao inicio, Posicao destino);
     bool proximoAoFogo(int x, int y);
     void resgatarAstronauta(int x, int y);
     void gerarRelatorio();

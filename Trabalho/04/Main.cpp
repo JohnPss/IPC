@@ -2,65 +2,48 @@
 #include <fstream>
 #include <vector>
 #include <sstream>
+#include <queue>
+#include <algorithm>
 #include "Astronauta.hpp"
 #include "RoboDeResgate.hpp"
 #include "EstacaoEspacial.hpp"
-#include <algorithm>
 
 using namespace std;
 
-void bfs(int x, int y, int linhas, int colunas, vector<vector<int>> &distancia, vector<vector<bool>> &visitados, vector<vector<char>> &matriz)
-{
-    cout << "chegou no BFS" << endl;
-
-    vector<pair<int, int>> direcoes = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
-    visitados[x][y] = true;
-    distancia[x][y] = 0;
-    vector<pair<int, int>> fila;
-    fila.push_back({x, y});
-    while (!fila.empty())
-    {
-        pair<int, int> atual = fila.front();
-        fila.erase(fila.begin());
-        for (auto direcao : direcoes)
-        {
-            int novoX = atual.first + direcao.first;
-            int novoY = atual.second + direcao.second;
-            if (novoX >= 0 && novoX < linhas && novoY >= 0 && novoY < colunas && !visitados[novoX][novoY] && matriz[novoX][novoY] != 'O' && matriz[novoX][novoY] != 'F')
-            {
-                visitados[novoX][novoY] = true;
-                distancia[novoX][novoY] = distancia[atual.first][atual.second] + 1;
-                fila.push_back({novoX, novoY});
-            }
-        }
-    }
-}
-
 int main()
 {
-    EstacaoEspacial estacao;
     ifstream arquivo("Entrada1.txt");
-    estacao.carregarDoArquivo(arquivo);
-
-    // cout << "Matriz: " << endl;
-    // estacao.exbirMatriz();
-    // cout << "Astronautas: " << endl;
-    // estacao.exibirAstronautas();
-
-    RoboDeResgate robo(estacao);
-    auto distancia = robo.calcularDistancia(0, 0);
-    for (auto linha : distancia)
+    if (!arquivo)
     {
-        for (auto d : linha)
-        {
-            cout << d << " ";
-        }
-        cout << endl;
+        cerr << "Erro ao abrir o arquivo de entrada!" << endl;
+        return 1;
     }
 
-    // robo.calcularDistancia(0, 0);
-    // robo.iniciarResgate();
-    // robo.gerarRelatorio();
+    EstacaoEspacial estacao;
+    try
+    {
+        estacao.carregarDoArquivo(arquivo);
+    }
+    catch (const exception &e)
+    {
+        cerr << "Erro ao carregar a estação espacial: " << e.what() << endl;
+        return 1;
+    }
+
+    RoboDeResgate robo(estacao);
+    int distanciaTotal = robo.calcularMenorCaminhoResgate();
+
+    if (distanciaTotal == -1)
+    {
+        cout << "Não foi possível resgatar todos os astronautas." << endl;
+    }
+    else
+    {
+        cout << "Distância mínima necessária para resgatar todos: " << distanciaTotal << endl;
+    }
+
+    cout << "\nRelatório final:" << endl;
+    robo.gerarRelatorio();
 
     return 0;
 }
