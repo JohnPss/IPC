@@ -29,12 +29,12 @@ void Astronauta::setY(int y)
     this->y = y;
 }
 
-std::string Astronauta::getNome()
+std::string Astronauta::getNome() const
 {
     return nome;
 }
 
-int Astronauta::getNivelSaude()
+int Astronauta::getNivelSaude() const
 {
     return nivelSaude;
 }

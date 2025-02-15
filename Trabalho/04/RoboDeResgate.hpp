@@ -27,6 +27,7 @@ public:
     std::vector<std::vector<int>> calcularDistancia(int x, int y);
     bool isPosicaoValida(int x, int y);
     void moverRobo(Posicao inicio, Posicao fim);
+    void imprimirCaminho(const std::vector<Posicao> &caminho);
     void imprimirMatriz(const Posicao &posicaoAtual);
     int calcularMenorCaminhoResgate();
     int calcularDistanciaEntrePontos(Posicao inicio, Posicao destino);

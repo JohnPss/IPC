@@ -7,8 +7,8 @@
 #include "ModuloVazio.hpp"
 #include "ModuloSeguranca.hpp"
 #include "ModuloComFogo.hpp"
-#include "ModuloComAstronauta.hpp"
 #include "Posicao.h"
+#include "ModuloComAstronauta.hpp"
 #include <vector>
 #include <iostream>
 
@@ -25,7 +25,7 @@ public:
     EstacaoEspacial(int linhas, int colunas);
     void adicionarModulo(size_t x, size_t y, char tipo);
     void adicionarAstronauta(Astronauta astronauta);
-    std::vector<std::vector<Modulo>> &getMatriz() { return matriz; }
+    const std::vector<std::vector<Modulo>> &getMatriz() const { return matriz; }
     std::vector<Astronauta> getAstronautas();
     size_t getLinhas() const;
     size_t getColunas() const;

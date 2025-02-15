@@ -18,8 +18,8 @@ public:
     void setX(int x);
     void setY(int y);
 
-    std::string getNome();
-    int getNivelSaude();
+    std::string getNome() const;
+    int getNivelSaude() const;
     bool isAtendimentoUrgente();
 
     std::string toString();
